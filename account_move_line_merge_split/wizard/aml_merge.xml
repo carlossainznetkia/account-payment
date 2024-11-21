@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="account_move_line_merge_form" model="ir.ui.view">
+            <field name="name">account.move.line.merge.form</field>
+            <field name="model">account_move_line_edit</field>
+            <field name="arch" type="xml">
+                <form>
+                    <div>
+                        To merge move_lines, all must belong to the same entry and account.
+                    </div>   
+                    <div>
+                        You are about to merge the selected elements into a single move_line; this process is irreversible.
+                    </div>
+                    <group>
+                        <group>
+                            <field name="aggregation_date" required="1"/>
+                        </group>
+                    </group>
+                    <footer>
+                        <button string="Merge" name="merge_move_lines" type="object" class="oe_highlight"/>
+                        <button string="Cancel" class="btn btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="account_move_line_merge_wizard_action" model="ir.actions.act_window">
+            <field name="name">Merge Move Lines</field>
+            <field name="res_model">account_move_line_edit</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="account_move_line_merge_form" />
+            <field name="target">new</field>
+        </record>
+    </data>
+</odoo>
