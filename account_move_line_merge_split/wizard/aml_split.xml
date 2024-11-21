@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="account_move_line_split_form" model="ir.ui.view">
+            <field name="name">account_move_line_split</field>
+            <field name="model">account_move_line_edit</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group attrs="{'invisible': [('move_line_id', '=', False)]}">
+                        <field name="move_line_id" invisible="1"/>
+                        <group><field name="move_line_value" readonly="1"/></group>
+                    </group>
+                    <group>
+                        <group><field name="division_nr" string="Number of Divisions"/></group>
+                        <group><button string="Generate Lines" name="generate_lines" type="object" class="oe_highlight"/></group>
+                    </group>
+                    <group>
+                        <field name="division_line_ids" string="Division Lines">
+                            <tree create="false" editable="top">
+                                <field name="customer_id" readonly="1" string="Customer"/>
+                                <field name="name" readonly="1" string="Name"/>
+                                <field name="amount" string="Amount"/>
+                                <field name="due_date" string="Due Date"/>
+                            </tree>
+                        </field>
+                    </group>
+                    <footer>
+                        <button string="Split" name="split_move_line" type="object" class="oe_highlight"/>
+                        <button string="Cancel" class="btn btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="account_move_line_split_wizard_action" model="ir.actions.act_window">
+            <field name="name">Split Move Lines</field>
+            <field name="res_model">account_move_line_edit</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="account_move_line_split_form" />
+            <field name="target">new</field>
+        </record>
+
+    </data>
+</odoo>
