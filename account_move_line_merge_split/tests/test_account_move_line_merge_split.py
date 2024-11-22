@@ -1,13 +1,14 @@
 # Copyright 2024 NETKIA S.L.
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
-from odoo import fields
-from odoo.tests import common
-from odoo import exceptions
 from datetime import datetime
+
 from dateutil.relativedelta import relativedelta
 
-class TestAmlSplitMoveLines(common.TransactionCase):
+from odoo import exceptions, fields
+from odoo.tests import common
 
+
+class TestAmlSplitMoveLines(common.TransactionCase):
     def setUp(self):
         super(TestAmlSplitMoveLines, self).setUp()
         self.env = self.env(context=dict(self.env.context, tracking_disable=True))
@@ -49,7 +50,7 @@ class TestAmlSplitMoveLines(common.TransactionCase):
                             "name": "Producto de prueba",
                             "quantity": 1.0,
                             "price_unit": 100.0,
-                            'date_maturity': datetime.today(),
+                            "date_maturity": datetime.today(),
                         },
                     ),
                     (
@@ -61,9 +62,9 @@ class TestAmlSplitMoveLines(common.TransactionCase):
                             "name": "Producto de prueba",
                             "quantity": 1.0,
                             "price_unit": 100.0,
-                            'date_maturity': datetime.today(),
+                            "date_maturity": datetime.today(),
                         },
-                    )
+                    ),
                 ],
             }
         )
@@ -88,7 +89,7 @@ class TestAmlSplitMoveLines(common.TransactionCase):
                             "name": "Producto de prueba",
                             "quantity": 1.0,
                             "price_unit": 100.0,
-                            'date_maturity': datetime.today(),
+                            "date_maturity": datetime.today(),
                         },
                     ),
                     (
@@ -100,9 +101,9 @@ class TestAmlSplitMoveLines(common.TransactionCase):
                             "name": "Producto de prueba",
                             "quantity": 1.0,
                             "price_unit": 100.0,
-                            'date_maturity': datetime.today(),
+                            "date_maturity": datetime.today(),
                         },
-                    )
+                    ),
                 ],
             }
         )
@@ -123,237 +124,329 @@ class TestAmlSplitMoveLines(common.TransactionCase):
         self.line_in = self.invoice_in.line_ids[0]
         self.line_in2 = self.invoice_in.line_ids[1]
 
-        self.another_line_out_move = self.AccountMove.create({
-            'journal_id': self.journal.id,
-            'date': fields.Date.today(),
-            'line_ids': [
-                (0, 0, {
-                    'name': 'Another Test Line Debit',
-                    'account_id': self.account.id,
-                    'debit': 50.0,
-                    'credit': 0.0,
-                    'date_maturity': datetime.today() + relativedelta(months=1),
-                    'partner_id': self.partner.id,
-                    'company_id': self.company.id,
-                }),
-                (0, 0, {
-                    'name': 'Another Test Line Credit',
-                    'account_id': self.account.id,
-                    'debit': 0.0,
-                    'credit': 50.0,
-                    'date_maturity': datetime.today() + relativedelta(months=1),
-                    'partner_id': self.partner.id,
-                    'company_id': self.company.id,
-                }),
-            ]
-        })
+        self.another_line_out_move = self.AccountMove.create(
+            {
+                "journal_id": self.journal.id,
+                "date": fields.Date.today(),
+                "line_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "name": "Another Test Line Debit",
+                            "account_id": self.account.id,
+                            "debit": 50.0,
+                            "credit": 0.0,
+                            "date_maturity": datetime.today() + relativedelta(months=1),
+                            "partner_id": self.partner.id,
+                            "company_id": self.company.id,
+                        },
+                    ),
+                    (
+                        0,
+                        0,
+                        {
+                            "name": "Another Test Line Credit",
+                            "account_id": self.account.id,
+                            "debit": 0.0,
+                            "credit": 50.0,
+                            "date_maturity": datetime.today() + relativedelta(months=1),
+                            "partner_id": self.partner.id,
+                            "company_id": self.company.id,
+                        },
+                    ),
+                ],
+            }
+        )
         self.another_line_out_move.action_post()
 
-        self.another_line_out = self.another_line_out_move.line_ids.filtered(lambda l: l.debit == 0.0 and l.credit == 50.0)
+        self.another_line_out = self.another_line_out_move.line_ids.filtered(
+            lambda a: a.debit == 0.0 and a.credit == 50.0
+        )
 
     def test_action_split_move_lines(self):
         action = self.line_out.action_split_move_lines()
-        self.assertEqual(action['res_model'], 'account_move_line_edit')
+        self.assertEqual(action["res_model"], "account_move_line_edit")
 
     def test_action_merge_move_lines(self):
         action = self.line_out.action_merge_move_lines()
-        self.assertEqual(action['res_model'], 'account_move_line_edit')
+        self.assertEqual(action["res_model"], "account_move_line_edit")
 
     def test_generate_lines(self):
-        wizard = self.env['account_move_line_edit'].create({
-            'division_nr': 3,
-        })
+        wizard = self.env["account_move_line_edit"].create(
+            {
+                "division_nr": 3,
+            }
+        )
         wizard.with_context(active_ids=[self.line_out.id]).generate_lines()
         self.assertEqual(len(wizard.division_line_ids), 3)
-        self.assertAlmostEqual(sum(linea.amount for linea in wizard.division_line_ids), 100)
+        self.assertAlmostEqual(
+            sum(linea.amount for linea in wizard.division_line_ids), 100
+        )
 
     def test_generate_lines_invalid_division_nr(self):
         with self.assertRaises(exceptions.ValidationError):
-            wizard = self.env['account_move_line_edit'].create({
-                'division_nr': 0,  # Valor inválido
-            })
+            wizard = self.env["account_move_line_edit"].create(
+                {
+                    "division_nr": 0,  # Valor inválido
+                }
+            )
             wizard.with_context(active_ids=[self.line_out.id]).generate_lines()
 
     def test_generate_lines_invalid_division_nr_equal_1(self):
         with self.assertRaises(exceptions.ValidationError):
-            wizard = self.env['account_move_line_edit'].create({
-                'division_nr': 1,  # Valor inválido
-            })
+            wizard = self.env["account_move_line_edit"].create(
+                {
+                    "division_nr": 1,  # Valor inválido
+                }
+            )
             wizard.with_context(active_ids=[self.line_out.id]).generate_lines()
 
     def test_generate_lines_multiple_move_lines(self):
         with self.assertRaises(exceptions.ValidationError):
-            wizard = self.env['account_move_line_edit'].create({
-                'division_nr': 3,
-            })
-            wizard.with_context(active_ids=[self.line_out.id, self.another_line_out.id]).generate_lines()
+            wizard = self.env["account_move_line_edit"].create(
+                {
+                    "division_nr": 3,
+                }
+            )
+            wizard.with_context(
+                active_ids=[self.line_out.id, self.another_line_out.id]
+            ).generate_lines()
 
     def test_generate_lines_no_maturity_date(self):
-        move = self.env['account.move'].create({
-            'journal_id': self.journal.id,
-            'date': fields.Date.today(),
-            'line_ids': [
-                (0, 0, {
-                    'name': 'Test Move Line',
-                    'account_id': self.account.id,
-                    'debit': 100,
-                    'credit': 0,
-                    'date_maturity': False,  # Sin fecha de vencimiento
-                    'partner_id': self.partner.id,
-                }),
-                (0, 0, {
-                    'name': 'Balancing Line',
-                    'account_id': self.account.id,
-                    'debit': 0,
-                    'credit': 100,
-                    'partner_id': self.partner.id,
-                }),
-            ]
-        })
+        move = self.env["account.move"].create(
+            {
+                "journal_id": self.journal.id,
+                "date": fields.Date.today(),
+                "line_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "name": "Test Move Line",
+                            "account_id": self.account.id,
+                            "debit": 100,
+                            "credit": 0,
+                            "date_maturity": False,  # Sin fecha de vencimiento
+                            "partner_id": self.partner.id,
+                        },
+                    ),
+                    (
+                        0,
+                        0,
+                        {
+                            "name": "Balancing Line",
+                            "account_id": self.account.id,
+                            "debit": 0,
+                            "credit": 100,
+                            "partner_id": self.partner.id,
+                        },
+                    ),
+                ],
+            }
+        )
 
-        move_line_id= move.line_ids.filtered(lambda line: line.debit > 0)
-        
-        wizard = self.env['account_move_line_edit'].create({
-            'division_nr': 3,
-        })
-        
+        move_line_id = move.line_ids.filtered(lambda line: line.debit > 0)
+
+        wizard = self.env["account_move_line_edit"].create(
+            {
+                "division_nr": 3,
+            }
+        )
+
         with self.assertRaises(exceptions.ValidationError):
             wizard.with_context(active_ids=[move_line_id.id]).generate_lines()
 
     def test_generate_lines_zero_credit_debit(self):
-        move_line_id= self.env['account.move.line'].create({
-            'name': 'Test Move Line',
-            'move_id': self.invoice_out.id,
-            'account_id': self.account.id,
-            'journal_id': self.journal.id,
-            'debit': 0,
-            'credit': 0,
-            'date_maturity': '2024-01-01',
-            'partner_id': self.invoice_out.partner_id.id,
-            'company_id': self.company.id,
-        })
-        
-        wizard = self.env['account_move_line_edit'].create({
-            'division_nr': 3,
-        })
+        move_line_id = self.env["account.move.line"].create(
+            {
+                "name": "Test Move Line",
+                "move_id": self.invoice_out.id,
+                "account_id": self.account.id,
+                "journal_id": self.journal.id,
+                "debit": 0,
+                "credit": 0,
+                "date_maturity": "2024-01-01",
+                "partner_id": self.invoice_out.partner_id.id,
+                "company_id": self.company.id,
+            }
+        )
+
+        wizard = self.env["account_move_line_edit"].create(
+            {
+                "division_nr": 3,
+            }
+        )
         wizard.with_context(active_ids=[move_line_id.id]).generate_lines()
-        
+
         self.assertEqual(len(wizard.division_line_ids), 3)
-        self.assertAlmostEqual(sum(linea.amount for linea in wizard.division_line_ids), 0)
+        self.assertAlmostEqual(
+            sum(linea.amount for linea in wizard.division_line_ids), 0
+        )
 
     def test_merge_move_lines(self):
         # Move for tests
-        move = self.env['account.move'].create({
-            'journal_id': self.journal.id,
-            'date': fields.Date.today(),
-            'line_ids': [
-                (0, 0, {
-                    'name': 'Test Move Line 1',
-                    'account_id': self.account.id,
-                    'debit': 50,
-                    'credit': 0,
-                    'date_maturity': fields.Date.today(),
-                    'partner_id': self.partner.id,
-                }),
-                (0, 0, {
-                    'name': 'Test Move Line 2',
-                    'account_id': self.account.id,
-                    'debit': 50,
-                    'credit': 0,
-                    'date_maturity': fields.Date.today(),
-                    'partner_id': self.partner.id,
-                }),
-                (0, 0, {
-                    'name': 'Test Move Line 3',
-                    'account_id': self.account2.id, # Different account to test it
-                    'debit': 50,
-                    'credit': 0,
-                    'date_maturity': fields.Date.today(),
-                    'partner_id': self.partner.id,
-                }),
-                (0, 0, {
-                    'name': 'Balancing Line 1',
-                    'account_id': self.account.id,
-                    'debit': 0,
-                    'credit': 150,
-                    'partner_id': self.partner.id,
-                }),
-            ]
-        })
+        move = self.env["account.move"].create(
+            {
+                "journal_id": self.journal.id,
+                "date": fields.Date.today(),
+                "line_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "name": "Test Move Line 1",
+                            "account_id": self.account.id,
+                            "debit": 50,
+                            "credit": 0,
+                            "date_maturity": fields.Date.today(),
+                            "partner_id": self.partner.id,
+                        },
+                    ),
+                    (
+                        0,
+                        0,
+                        {
+                            "name": "Test Move Line 2",
+                            "account_id": self.account.id,
+                            "debit": 50,
+                            "credit": 0,
+                            "date_maturity": fields.Date.today(),
+                            "partner_id": self.partner.id,
+                        },
+                    ),
+                    (
+                        0,
+                        0,
+                        {
+                            "name": "Test Move Line 3",
+                            "account_id": self.account2.id,  # Different account to test it
+                            "debit": 50,
+                            "credit": 0,
+                            "date_maturity": fields.Date.today(),
+                            "partner_id": self.partner.id,
+                        },
+                    ),
+                    (
+                        0,
+                        0,
+                        {
+                            "name": "Balancing Line 1",
+                            "account_id": self.account.id,
+                            "debit": 0,
+                            "credit": 150,
+                            "partner_id": self.partner.id,
+                        },
+                    ),
+                ],
+            }
+        )
 
         # Different move to test it
-        move_dif = self.env['account.move'].create({
-            'journal_id': self.journal.id,
-            'date': fields.Date.today(),
-            'line_ids': [
-                (0, 0, {
-                    'name': 'Test Move Line 1',
-                    'account_id': self.account2.id,
-                    'debit': 50,
-                    'credit': 0,
-                    'date_maturity': fields.Date.today(),
-                    'partner_id': self.partner.id,
-                }),
-                (0, 0, {
-                    'name': 'Balancing Line 1',
-                    'account_id': self.account2.id,
-                    'debit': 0,
-                    'credit': 50,
-                    'partner_id': self.partner.id,
-                }),
-            ]
-        })
+        move_dif = self.env["account.move"].create(
+            {
+                "journal_id": self.journal.id,
+                "date": fields.Date.today(),
+                "line_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "name": "Test Move Line 1",
+                            "account_id": self.account2.id,
+                            "debit": 50,
+                            "credit": 0,
+                            "date_maturity": fields.Date.today(),
+                            "partner_id": self.partner.id,
+                        },
+                    ),
+                    (
+                        0,
+                        0,
+                        {
+                            "name": "Balancing Line 1",
+                            "account_id": self.account2.id,
+                            "debit": 0,
+                            "credit": 50,
+                            "partner_id": self.partner.id,
+                        },
+                    ),
+                ],
+            }
+        )
 
         move_line1 = move.line_ids[0]
         move_line2 = move.line_ids[1]
-        move_line1_dif = move.line_ids[2] # Different account
+        move_line1_dif = move.line_ids[2]  # Different account
         move_line3 = move.line_ids[3]
-        move_line2_dif = move_dif.line_ids[0] # Different move
+        move_line2_dif = move_dif.line_ids[0]  # Different move
 
-        wizard = self.env['account_move_line_edit'].create({
-            'aggregation_date': fields.Date.today(),
-        })
+        wizard = self.env["account_move_line_edit"].create(
+            {
+                "aggregation_date": fields.Date.today(),
+            }
+        )
 
-        # Test reconciled line merging 
-        move_line1.write({
-            'reconciled': True,
-        })
+        # Test reconciled line merging
+        move_line1.write(
+            {
+                "reconciled": True,
+            }
+        )
         with self.assertRaises(exceptions.ValidationError):
             wizard.validate_edit_move_lines([move_line1])
-        move_line1.write({
-            'reconciled': False,
-        })
+        move_line1.write(
+            {
+                "reconciled": False,
+            }
+        )
 
         # Test different account lines merging
         with self.assertRaises(exceptions.ValidationError):
-            wizard.with_context(active_ids=[move_line1.id, move_line1_dif.id]).merge_move_lines()
+            wizard.with_context(
+                active_ids=[move_line1.id, move_line1_dif.id]
+            ).merge_move_lines()
 
         # Test different move lines merging
         with self.assertRaises(exceptions.ValidationError):
-            wizard.with_context(active_ids=[move_line2.id, move_line2_dif.id]).merge_move_lines()
+            wizard.with_context(
+                active_ids=[move_line2.id, move_line2_dif.id]
+            ).merge_move_lines()
 
         # Test just one move line merging
         with self.assertRaises(exceptions.ValidationError):
             wizard.with_context(active_ids=[move_line1.id]).merge_move_lines()
 
         # Test good merging
-        wizard.with_context(active_ids=[move_line1.id, move_line2.id]).merge_move_lines()
-        merged_move_line = self.env['account.move.line'].search([('id', 'not in', [move_line1.id, move_line2.id, move_line1_dif.id, move_line3.id]), ('move_id', 'in', [move.id])])
+        wizard.with_context(
+            active_ids=[move_line1.id, move_line2.id]
+        ).merge_move_lines()
+        merged_move_line = self.env["account.move.line"].search(
+            [
+                (
+                    "id",
+                    "not in",
+                    [move_line1.id, move_line2.id, move_line1_dif.id, move_line3.id],
+                ),
+                ("move_id", "in", [move.id]),
+            ]
+        )
         self.assertEqual(len(merged_move_line), 1)
         self.assertEqual(merged_move_line.debit, 100)
         self.assertEqual(merged_move_line.credit, 0)
 
-
     def test_split_move_line(self):
-        wizard = self.env['account_move_line_edit'].create({})
-        
+        wizard = self.env["account_move_line_edit"].create({})
+
         # Test error if no division_nr set
         with self.assertRaises(exceptions.ValidationError):
             wizard.split_move_line()
 
-        wizard.write({
-            'division_nr': 3,
-        })
+        wizard.write(
+            {
+                "division_nr": 3,
+            }
+        )
 
         # Test splitting move line with credit line
         wizard.with_context(active_ids=[self.line_out.id]).generate_lines()
@@ -368,9 +461,11 @@ class TestAmlSplitMoveLines(common.TransactionCase):
         wizard.with_context(active_ids=[self.line_out2.id]).generate_lines()
         d_lines = wizard.division_line_ids
         d_lines[0].amount = 0
-        wizard.write({
-            'division_line_ids': d_lines,
-        })
+        wizard.write(
+            {
+                "division_line_ids": d_lines,
+            }
+        )
         with self.assertRaises(exceptions.ValidationError):
             wizard.split_move_line()
 
@@ -383,8 +478,10 @@ class TestAmlSplitMoveLines(common.TransactionCase):
         wizard.with_context(active_ids=[self.line_in2.id]).generate_lines()
         d_lines = wizard.division_line_ids
         d_lines[0].amount = 0
-        wizard.write({
-            'division_line_ids': d_lines,
-        })
+        wizard.write(
+            {
+                "division_line_ids": d_lines,
+            }
+        )
         with self.assertRaises(exceptions.ValidationError):
             wizard.split_move_line()

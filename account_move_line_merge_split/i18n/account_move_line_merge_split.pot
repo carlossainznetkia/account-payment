@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0-20231205\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-14 10:40+0000\n"
-"PO-Revision-Date: 2024-11-14 10:40+0000\n"
+"POT-Creation-Date: 2024-11-22 09:03+0000\n"
+"PO-Revision-Date: 2024-11-22 09:03+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,17 +16,13 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: account_move_line_merge_split
-#: code:addons/account_move_line_merge_split/wizard/account_move_line_edit.py:0
 #: model:ir.model.fields,field_description:account_move_line_merge_split.field_account_move_line_edit__aggregation_date
-#, python-format
 msgid "Aggregation Date"
 msgstr ""
 
 #. module: account_move_line_merge_split
-#: code:addons/account_move_line_merge_split/wizard/account_move_line_edit_line.py:0
 #: model:ir.model.fields,field_description:account_move_line_merge_split.field_account_move_line_edit_line__amount
 #: model_terms:ir.ui.view,arch_db:account_move_line_merge_split.account_move_line_split_form
-#, python-format
 msgid "Amount"
 msgstr ""
 
@@ -39,20 +35,16 @@ msgstr ""
 #. module: account_move_line_merge_split
 #: code:addons/account_move_line_merge_split/wizard/account_move_line_edit.py:0
 #, python-format
-msgid "Cannot divide an entry without a maturity date."
+msgid "Cannot divide the move line '%s' as it does not have a maturity date."
 msgstr ""
 
 #. module: account_move_line_merge_split
-#: code:addons/account_move_line_merge_split/wizard/account_move_line_edit_line.py:0
 #: model:ir.model.fields,field_description:account_move_line_merge_split.field_account_move_line_edit_line__name
-#, python-format
 msgid "Concept"
 msgstr ""
 
 #. module: account_move_line_merge_split
-#: code:addons/account_move_line_merge_split/wizard/account_move_line_edit_line.py:0
 #: model:ir.model.fields,field_description:account_move_line_merge_split.field_account_move_line_edit_line__config_id
-#, python-format
 msgid "Config Ref."
 msgstr ""
 
@@ -69,10 +61,8 @@ msgid "Created on"
 msgstr ""
 
 #. module: account_move_line_merge_split
-#: code:addons/account_move_line_merge_split/wizard/account_move_line_edit_line.py:0
 #: model:ir.model.fields,field_description:account_move_line_merge_split.field_account_move_line_edit_line__customer_id
 #: model_terms:ir.ui.view,arch_db:account_move_line_merge_split.account_move_line_split_form
-#, python-format
 msgid "Customer"
 msgstr ""
 
@@ -84,18 +74,14 @@ msgid "Display Name"
 msgstr ""
 
 #. module: account_move_line_merge_split
-#: code:addons/account_move_line_merge_split/wizard/account_move_line_edit.py:0
 #: model:ir.model.fields,field_description:account_move_line_merge_split.field_account_move_line_edit__division_line_ids
 #: model_terms:ir.ui.view,arch_db:account_move_line_merge_split.account_move_line_split_form
-#, python-format
 msgid "Division Lines"
 msgstr ""
 
 #. module: account_move_line_merge_split
-#: code:addons/account_move_line_merge_split/wizard/account_move_line_edit_line.py:0
 #: model:ir.model.fields,field_description:account_move_line_merge_split.field_account_move_line_edit_line__due_date
 #: model_terms:ir.ui.view,arch_db:account_move_line_merge_split.account_move_line_split_form
-#, python-format
 msgid "Due Date"
 msgstr ""
 
@@ -147,9 +133,7 @@ msgid "Merge Move Lines"
 msgstr ""
 
 #. module: account_move_line_merge_split
-#: code:addons/account_move_line_merge_split/wizard/account_move_line_edit.py:0
-#: model:ir.model.fields,field_description:account_move_line_merge_split.field_account_move_line_edit__move_line
-#, python-format
+#: model:ir.model.fields,field_description:account_move_line_merge_split.field_account_move_line_edit__move_line_id
 msgid "Move Line"
 msgstr ""
 
@@ -159,10 +143,8 @@ msgid "Name"
 msgstr ""
 
 #. module: account_move_line_merge_split
-#: code:addons/account_move_line_merge_split/wizard/account_move_line_edit.py:0
 #: model:ir.model.fields,field_description:account_move_line_merge_split.field_account_move_line_edit__division_nr
 #: model_terms:ir.ui.view,arch_db:account_move_line_merge_split.account_move_line_split_form
-#, python-format
 msgid "Number of Divisions"
 msgstr ""
 
@@ -185,11 +167,10 @@ msgstr ""
 
 #. module: account_move_line_merge_split
 #: code:addons/account_move_line_merge_split/wizard/account_move_line_edit.py:0
-#: code:addons/account_move_line_merge_split/wizard/account_move_line_edit.py:0
 #, python-format
 msgid ""
-"The sum of the new move lines must match the original move line's "
-"debit/credit."
+"The sum of the division lines (%s) does not match the original move line\"s "
+"value (%s)."
 msgstr ""
 
 #. module: account_move_line_merge_split
@@ -204,9 +185,7 @@ msgid "To merge move_lines, all must belong to the same entry and account."
 msgstr ""
 
 #. module: account_move_line_merge_split
-#: code:addons/account_move_line_merge_split/wizard/account_move_line_edit.py:0
 #: model:ir.model.fields,field_description:account_move_line_merge_split.field_account_move_line_edit__move_line_value
-#, python-format
 msgid "Total Move Line Value"
 msgstr ""
 
@@ -244,11 +223,21 @@ msgstr ""
 #. module: account_move_line_merge_split
 #: code:addons/account_move_line_merge_split/wizard/account_move_line_edit.py:0
 #, python-format
-msgid "You must generate the division lines."
+msgid "You must generate the division lines first."
 msgstr ""
 
 #. module: account_move_line_merge_split
 #: code:addons/account_move_line_merge_split/wizard/account_move_line_edit.py:0
 #, python-format
 msgid "You must specify a valid number of divisions."
+msgstr ""
+
+#. module: account_move_line_merge_split
+#: model:ir.model,name:account_move_line_merge_split.model_account_move_line_edit
+msgid "account_move_line_edit"
+msgstr ""
+
+#. module: account_move_line_merge_split
+#: model:ir.model,name:account_move_line_merge_split.model_account_move_line_edit_line
+msgid "account_move_line_edit_line"
 msgstr ""
