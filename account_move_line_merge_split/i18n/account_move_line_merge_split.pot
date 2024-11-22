@@ -1,0 +1,240 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* account_move_line_merge_split
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 15.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-11-22 11:42+0000\n"
+"PO-Revision-Date: 2024-11-22 11:42+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: account_move_line_merge_split
+#: model:ir.model.fields,field_description:account_move_line_merge_split.field_account_move_line_edit__aggregation_date
+msgid "Aggregation Date"
+msgstr ""
+
+#. module: account_move_line_merge_split
+#: model:ir.model.fields,field_description:account_move_line_merge_split.field_account_move_line_edit_line__amount
+#: model_terms:ir.ui.view,arch_db:account_move_line_merge_split.account_move_line_split_form
+msgid "Amount"
+msgstr ""
+
+#. module: account_move_line_merge_split
+#: model_terms:ir.ui.view,arch_db:account_move_line_merge_split.account_move_line_merge_form
+#: model_terms:ir.ui.view,arch_db:account_move_line_merge_split.account_move_line_split_form
+msgid "Cancel"
+msgstr ""
+
+#. module: account_move_line_merge_split
+#: code:addons/account_move_line_merge_split/wizard/account_move_line_edit.py:0
+#, python-format
+msgid "Cannot divide the move line '%s' as it does not have a maturity date."
+msgstr ""
+
+#. module: account_move_line_merge_split
+#: model:ir.model.fields,field_description:account_move_line_merge_split.field_account_move_line_edit_line__name
+msgid "Concept"
+msgstr ""
+
+#. module: account_move_line_merge_split
+#: model:ir.model.fields,field_description:account_move_line_merge_split.field_account_move_line_edit_line__config_id
+msgid "Config Ref."
+msgstr ""
+
+#. module: account_move_line_merge_split
+#: model:ir.model.fields,field_description:account_move_line_merge_split.field_account_move_line_edit__create_uid
+#: model:ir.model.fields,field_description:account_move_line_merge_split.field_account_move_line_edit_line__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: account_move_line_merge_split
+#: model:ir.model.fields,field_description:account_move_line_merge_split.field_account_move_line_edit__create_date
+#: model:ir.model.fields,field_description:account_move_line_merge_split.field_account_move_line_edit_line__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: account_move_line_merge_split
+#: model:ir.model.fields,field_description:account_move_line_merge_split.field_account_move_line_edit_line__customer_id
+#: model_terms:ir.ui.view,arch_db:account_move_line_merge_split.account_move_line_split_form
+msgid "Customer"
+msgstr ""
+
+#. module: account_move_line_merge_split
+#: model:ir.model.fields,field_description:account_move_line_merge_split.field_account_move_line_edit__display_name
+#: model:ir.model.fields,field_description:account_move_line_merge_split.field_account_move_line_edit_line__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: account_move_line_merge_split
+#: model:ir.model.fields,field_description:account_move_line_merge_split.field_account_move_line_edit__division_line_ids
+#: model_terms:ir.ui.view,arch_db:account_move_line_merge_split.account_move_line_split_form
+msgid "Division Lines"
+msgstr ""
+
+#. module: account_move_line_merge_split
+#: model:ir.model.fields,field_description:account_move_line_merge_split.field_account_move_line_edit_line__due_date
+#: model_terms:ir.ui.view,arch_db:account_move_line_merge_split.account_move_line_split_form
+msgid "Due Date"
+msgstr ""
+
+#. module: account_move_line_merge_split
+#: model_terms:ir.ui.view,arch_db:account_move_line_merge_split.account_move_line_split_form
+msgid "Generate Lines"
+msgstr ""
+
+#. module: account_move_line_merge_split
+#: model:ir.model.fields,field_description:account_move_line_merge_split.field_account_move_line_edit__id
+#: model:ir.model.fields,field_description:account_move_line_merge_split.field_account_move_line_edit_line__id
+msgid "ID"
+msgstr ""
+
+#. module: account_move_line_merge_split
+#: model:ir.model,name:account_move_line_merge_split.model_account_move_line
+msgid "Journal Item"
+msgstr ""
+
+#. module: account_move_line_merge_split
+#: model:ir.model.fields,field_description:account_move_line_merge_split.field_account_move_line_edit____last_update
+#: model:ir.model.fields,field_description:account_move_line_merge_split.field_account_move_line_edit_line____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: account_move_line_merge_split
+#: model:ir.model.fields,field_description:account_move_line_merge_split.field_account_move_line_edit__write_uid
+#: model:ir.model.fields,field_description:account_move_line_merge_split.field_account_move_line_edit_line__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: account_move_line_merge_split
+#: model:ir.model.fields,field_description:account_move_line_merge_split.field_account_move_line_edit__write_date
+#: model:ir.model.fields,field_description:account_move_line_merge_split.field_account_move_line_edit_line__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: account_move_line_merge_split
+#: model_terms:ir.ui.view,arch_db:account_move_line_merge_split.account_move_line_merge_form
+msgid "Merge"
+msgstr ""
+
+#. module: account_move_line_merge_split
+#: model:ir.actions.act_window,name:account_move_line_merge_split.account_move_line_merge_wizard_action
+#: model:ir.actions.server,name:account_move_line_merge_split.action_merge_move_lines
+msgid "Merge Move Lines"
+msgstr ""
+
+#. module: account_move_line_merge_split
+#: model:ir.model.fields,field_description:account_move_line_merge_split.field_account_move_line_edit__move_line_id
+msgid "Move Line"
+msgstr ""
+
+#. module: account_move_line_merge_split
+#: model_terms:ir.ui.view,arch_db:account_move_line_merge_split.account_move_line_split_form
+msgid "Name"
+msgstr ""
+
+#. module: account_move_line_merge_split
+#: model:ir.model.fields,field_description:account_move_line_merge_split.field_account_move_line_edit__division_nr
+#: model_terms:ir.ui.view,arch_db:account_move_line_merge_split.account_move_line_split_form
+msgid "Number of Divisions"
+msgstr ""
+
+#. module: account_move_line_merge_split
+#: model_terms:ir.ui.view,arch_db:account_move_line_merge_split.account_move_line_split_form
+msgid "Split"
+msgstr ""
+
+#. module: account_move_line_merge_split
+#: model:ir.actions.act_window,name:account_move_line_merge_split.account_move_line_split_wizard_action
+#: model:ir.actions.server,name:account_move_line_merge_split.action_split_move_lines
+msgid "Split Move Lines"
+msgstr ""
+
+#. module: account_move_line_merge_split
+#: code:addons/account_move_line_merge_split/wizard/account_move_line_edit.py:0
+#, python-format
+msgid "The new move lines could not be generated correctly."
+msgstr ""
+
+#. module: account_move_line_merge_split
+#: code:addons/account_move_line_merge_split/wizard/account_move_line_edit.py:0
+#, python-format
+msgid ""
+"The sum of the division lines (%s) does not match the original move line\"s "
+"value (%s)."
+msgstr ""
+
+#. module: account_move_line_merge_split
+#: code:addons/account_move_line_merge_split/wizard/account_move_line_edit.py:0
+#, python-format
+msgid "To divide move lines, you must select only one."
+msgstr ""
+
+#. module: account_move_line_merge_split
+#: model_terms:ir.ui.view,arch_db:account_move_line_merge_split.account_move_line_merge_form
+msgid "To merge move_lines, all must belong to the same entry and account."
+msgstr ""
+
+#. module: account_move_line_merge_split
+#: model:ir.model.fields,field_description:account_move_line_merge_split.field_account_move_line_edit__move_line_value
+msgid "Total Move Line Value"
+msgstr ""
+
+#. module: account_move_line_merge_split
+#: model_terms:ir.ui.view,arch_db:account_move_line_merge_split.account_move_line_merge_form
+msgid ""
+"You are about to merge the selected elements into a single move_line; this "
+"process is irreversible."
+msgstr ""
+
+#. module: account_move_line_merge_split
+#: code:addons/account_move_line_merge_split/wizard/account_move_line_edit.py:0
+#, python-format
+msgid "You are trying to edit a reconciled move line."
+msgstr ""
+
+#. module: account_move_line_merge_split
+#: code:addons/account_move_line_merge_split/wizard/account_move_line_edit.py:0
+#, python-format
+msgid "You have selected move lines from different accounts."
+msgstr ""
+
+#. module: account_move_line_merge_split
+#: code:addons/account_move_line_merge_split/wizard/account_move_line_edit.py:0
+#, python-format
+msgid "You have selected move lines from different invoices."
+msgstr ""
+
+#. module: account_move_line_merge_split
+#: code:addons/account_move_line_merge_split/wizard/account_move_line_edit.py:0
+#, python-format
+msgid "You have selected only one move line."
+msgstr ""
+
+#. module: account_move_line_merge_split
+#: code:addons/account_move_line_merge_split/wizard/account_move_line_edit.py:0
+#, python-format
+msgid "You must generate the division lines first."
+msgstr ""
+
+#. module: account_move_line_merge_split
+#: code:addons/account_move_line_merge_split/wizard/account_move_line_edit.py:0
+#, python-format
+msgid "You must specify a valid number of divisions."
+msgstr ""
+
+#. module: account_move_line_merge_split
+#: model:ir.model,name:account_move_line_merge_split.model_account_move_line_edit
+msgid "account_move_line_edit"
+msgstr ""
+
+#. module: account_move_line_merge_split
+#: model:ir.model,name:account_move_line_merge_split.model_account_move_line_edit_line
+msgid "account_move_line_edit_line"
+msgstr ""
